@@ -1,6 +1,7 @@
-from vehicle import Vehicle
+from itertools  import count
+from vehicle    import Vehicle
 
-def build_permutations(symbols, limit):
+def build_permutations(symbols, length):
     result = []
 
     def _build(current, depth):
@@ -11,14 +12,19 @@ def build_permutations(symbols, limit):
         for s in symbols:
             _build(current + s, depth)
 
-    for i in range(limit+1):
-        _build("", i)
-
+    _build("", length)
     return result
 
 
+def all_permutations(symbols):
+    for length in count(start=0, step=1):
+        chunk = build_permutations(symbols, length)
+        for item in chunk:
+            yield item
+
+
 def find_solution(final_position):
-    perms = build_permutations(['A', 'R'], 10)
+    perms = all_permutations(['A', 'R'])
 
     for p in perms:
         vehicle = Vehicle()
@@ -28,5 +34,4 @@ def find_solution(final_position):
             return p
 
     return None
-
 

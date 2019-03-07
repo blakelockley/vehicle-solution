@@ -8,7 +8,7 @@ def main(args):
 
     # Dispatch
     command = args[1]
-    command_map = {"run": run, "find": find}
+    command_map = {"run": run, "find": find, 'trace': trace}
 
     procedure = command_map.get(command, usage)
     procedure(args)
@@ -30,6 +30,23 @@ def find(args):
     final_position = int(args[2])
     solution = find_solution(final_position)
     print("Solution:", solution)
+
+
+def trace(args):
+    vehicle = Vehicle()
+    instructions = args[2]
+
+    trace = vehicle.trace_string(instructions)
+    instructions, positions, velocities = zip(*trace)
+
+    print("     +" + "-" * (len(trace) * 6 - 1) + "+")
+    print("     |", " | ".join(map(lambda x: x.center(3), instructions)), "|")
+    print("     +" + "-" * (len(trace) * 6 - 1) + "+")
+    print("vel: |", " | ".join(map(lambda x: str(x).center(3), velocities)), "|")
+    print("pos: |", " | ".join(map(lambda x: str(x).center(3), positions)), "|")
+    print("     +" + "-" * (len(trace) * 6 - 1) + "+")
+
+    print("Final position: ", vehicle.position)
 
 
 if __name__ == "__main__":

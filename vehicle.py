@@ -11,6 +11,7 @@
 # Every time an instruction is read, the position of
 #   the vechile will be updated by the current velocity
 
+from collections import namedtuple
 
 class Vehicle:
     _position  = 0
@@ -42,4 +43,17 @@ class Vehicle:
     def read_string(self, string):
         for inst in string:
             self.read_instruction(inst)
+
+
+    def trace_string(self, string):
+        TraceItem = namedtuple('TraceItem', ['instruction', 'position', 'velocity'])
+        trace = []
+
+        trace.append(TraceItem('I', self.position, self.velocity))
+
+        for inst in string:
+            self.read_instruction(inst)
+            trace.append(TraceItem(inst, self.position, self.velocity))
+
+        return trace
 

@@ -33,5 +33,3 @@ def find_solution(final_position):
         if vehicle.position == final_position:
             return p
 
-    return None
-
